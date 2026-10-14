@@ -1,0 +1,108 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "09 fire timeline",
+  "width": "container",
+  "height": 220,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "data": {
+    "url": "data/site/fire-daily.json"
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    },
+    {
+      "name": "episode",
+      "select": {
+        "type": "interval",
+        "encodings": [
+          "x"
+        ]
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year == selectedYear"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "#b86038"
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": null,
+      "axis": {
+        "format": "%b",
+        "tickCount": 12
+      }
+    },
+    "y": {
+      "field": "detections",
+      "type": "quantitative",
+      "title": "Detections / day"
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date",
+        "format": "%d %b %Y"
+      },
+      {
+        "field": "detections",
+        "type": "quantitative",
+        "title": "Hotspot detections",
+        "format": ",d"
+      }
+    ]
+  }
+}

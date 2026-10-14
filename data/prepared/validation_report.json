@@ -1,0 +1,218 @@
+{
+  "analysis_start": "2024-01-01",
+  "analysis_end_inclusive": "2025-12-31",
+  "checks": {
+    "max_hourly_vs_exported_daily_precipitation_difference_mm": 1.4210854715202004e-14,
+    "fire_input_rows_in_local_period": 18260,
+    "fire_type_counts_before_filter": {
+      "0": 13650,
+      "2": 4549,
+      "3": 61
+    },
+    "fire_retained_rows": 12948,
+    "fire_unassigned_points": 69,
+    "air_hourly_rows": 157896,
+    "weather_hourly_rows": 122808,
+    "daily_rows": 6579,
+    "daily_weather_matched_rows": 5117,
+    "air_missing_values_in_period": 0,
+    "unique_air_locations": 9,
+    "unique_weather_locations": 7,
+    "source_files_unchanged": true,
+    "total_spherical_boundary_area_km2": 331114.1766645051,
+    "saved_output_validation": "Passed: schemas, counts, source hashes, blank-weather preservation, annual means, unique mappings, geometry counts and bin totals."
+  },
+  "outputs": {
+    "locations.csv": {
+      "rows": 9,
+      "columns": [
+        "location_key",
+        "location_label",
+        "label_status",
+        "include_in_city_comparisons",
+        "air_source_id",
+        "air_latitude",
+        "air_longitude",
+        "weather_source_id",
+        "weather_latitude",
+        "weather_longitude",
+        "grid_separation_km"
+      ],
+      "bytes": 994
+    },
+    "location_daily.csv": {
+      "rows": 6579,
+      "columns": [
+        "location_key",
+        "date",
+        "pm25_mean_ugm3",
+        "pm25_max_hourly_ugm3",
+        "pm10_mean_ugm3",
+        "valid_hours",
+        "temperature_mean_c",
+        "temperature_min_c",
+        "temperature_max_c",
+        "precipitation_mm",
+        "wind10_mean_kmh",
+        "wind100_mean_kmh",
+        "weather_hours",
+        "has_weather"
+      ],
+      "bytes": 600386
+    },
+    "location_monthly.csv": {
+      "rows": 216,
+      "columns": [
+        "location_key",
+        "month",
+        "pm25_mean_ugm3",
+        "pm25_min_daily_ugm3",
+        "pm25_max_daily_ugm3",
+        "pm10_mean_ugm3",
+        "days",
+        "temperature_mean_c",
+        "wind10_mean_kmh",
+        "weather_days",
+        "precipitation_mm"
+      ],
+      "bytes": 15742
+    },
+    "location_annual.csv": {
+      "rows": 18,
+      "columns": [
+        "location_key",
+        "year",
+        "pm25_mean_ugm3",
+        "pm10_mean_ugm3",
+        "pm25_p95_daily_ugm3",
+        "days",
+        "location_label",
+        "air_latitude",
+        "air_longitude",
+        "include_in_city_comparisons"
+      ],
+      "bytes": 1517
+    },
+    "wind_rose.csv": {
+      "rows": 552,
+      "columns": [
+        "location_key",
+        "direction_index",
+        "speed_band",
+        "hours",
+        "pm25_mean_ugm3",
+        "direction",
+        "direction_degrees",
+        "percent_hours"
+      ],
+      "bytes": 23786
+    },
+    "national_pollution_monthly.csv": {
+      "rows": 576,
+      "columns": [
+        "date",
+        "pollutant",
+        "concentration",
+        "unit",
+        "is_missing"
+      ],
+      "bytes": 19473
+    },
+    "who_residence_annual.csv": {
+      "rows": 35,
+      "columns": [
+        "country",
+        "year",
+        "residence_type",
+        "pm25_ugm3",
+        "lower_bound",
+        "upper_bound",
+        "source_modified"
+      ],
+      "bytes": 2042
+    },
+    "fire_points.csv": {
+      "rows": 12948,
+      "columns": [
+        "date",
+        "latitude",
+        "longitude",
+        "state_code",
+        "confidence",
+        "frp_mw",
+        "daynight"
+      ],
+      "bytes": 585102
+    },
+    "fire_daily.csv": {
+      "rows": 731,
+      "columns": [
+        "date",
+        "detections",
+        "mean_frp_mw"
+      ],
+      "bytes": 15289
+    },
+    "fire_state_annual.csv": {
+      "rows": 34,
+      "columns": [
+        "state_code",
+        "year",
+        "detections",
+        "high_confidence_detections",
+        "mean_frp_mw",
+        "high_confidence_percent",
+        "state_name",
+        "boundary_area_km2",
+        "detections_per_1000_km2"
+      ],
+      "bytes": 2133
+    },
+    "fire_spatial_bins.csv": {
+      "rows": 805,
+      "columns": [
+        "year",
+        "detections",
+        "mean_frp_mw",
+        "west",
+        "south",
+        "east",
+        "north",
+        "longitude",
+        "latitude"
+      ],
+      "bytes": 51223
+    }
+  },
+  "sources": {
+    "air_pollution_co.csv": {
+      "bytes": 12373,
+      "sha256": "3972020a76c7704919ba2c31d07ba764c6fdaf50e9ee031384a6c9a0653c412e"
+    },
+    "data.xlsx": {
+      "bytes": 9854,
+      "sha256": "171d5dcecc09e417a975e6ddf7f86ff2ec4c8b55d8509f3188cff374258ae312"
+    },
+    "fire_archive_SV-C2_819336.csv": {
+      "bytes": 2613716,
+      "sha256": "f5b60eb0aac1a7a96e2b4c414ede5a1f38811f7afc3860cb325fd468c2e02448"
+    },
+    "fire_nrt_SV-C2_819336.csv": {
+      "bytes": 279739,
+      "sha256": "c09179a81e3fd98e22fda98b03920be3ecadfca7c792ffb76a68764cbb062f5a"
+    },
+    "Malaysia Air Quality.csv": {
+      "bytes": 8514406,
+      "sha256": "dc2950e9e1fdb76405701e5ca3f507b0529601e1e88a5d225938c6a0731a8e21"
+    },
+    "Malaysia Weather.csv": {
+      "bytes": 8909126,
+      "sha256": "1dae36fa14c8c57138d69d593c043aaf898d11001e9bbead49b5611a2ec3242b"
+    },
+    "malaysia_states.geojson.geojson": {
+      "bytes": 583194,
+      "sha256": "fb0f76f0f987c748b732ef02049113946db2dd5fc604130d4a0fbab4e74d4012"
+    }
+  },
+  "prepared_data_bytes": 1978610
+}

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "11 hotspot map",
+  "width": "container",
+  "height": 340,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    },
+    {
+      "name": "episodeStart",
+      "value": "2025-01-01"
+    },
+    {
+      "name": "episodeEnd",
+      "value": "2025-12-31"
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/site/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e4ebe1",
+        "stroke": "#a2b5a6",
+        "strokeWidth": 0.7
+      }
+    },
+    {
+      "data": {
+        "url": "data/site/fire-points.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "latitude": "number",
+            "longitude": "number",
+            "frp_mw": "number",
+            "year": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        },
+        {
+          "filter": "toDate(datum.date) >= toDate(episodeStart) && toDate(datum.date) <= toDate(episodeEnd)"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 10,
+        "opacity": 0.5,
+        "color": "#b86038"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "title": "Date",
+            "format": "%d %b %Y"
+          },
+          {
+            "field": "frp_mw",
+            "type": "quantitative",
+            "title": "Radiative power (MW)",
+            "format": ".1f"
+          },
+          {
+            "field": "confidence",
+            "type": "nominal",
+            "title": "Confidence code"
+          },
+          {
+            "field": "state_code",
+            "type": "nominal",
+            "title": "State code"
+          }
+        ]
+      }
+    }
+  ]
+}

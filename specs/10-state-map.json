@@ -1,0 +1,119 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "10 state map",
+  "width": "container",
+  "height": 320,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    }
+  ],
+  "data": {
+    "url": "data/site/states.geojson",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.properties['density_' + selectedYear]",
+      "as": "density"
+    },
+    {
+      "calculate": "datum.properties['count_' + selectedYear]",
+      "as": "count"
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "#fff",
+    "strokeWidth": 0.8
+  },
+  "encoding": {
+    "color": {
+      "field": "density",
+      "type": "quantitative",
+      "title": "Detections / 1,000 km²",
+      "scale": {
+        "domain": [
+          0,
+          127.3916
+        ],
+        "range": [
+          "#f5edda",
+          "#dba174",
+          "#a24925"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "properties.state_name",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Detections",
+        "format": ",d"
+      },
+      {
+        "field": "density",
+        "type": "quantitative",
+        "title": "Detections / 1,000 km²",
+        "format": ".1f"
+      }
+    ]
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "04 location map",
+  "width": "container",
+  "height": 350,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/site/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e4ebe1",
+        "stroke": "#a2b5a6",
+        "strokeWidth": 0.7
+      }
+    },
+    {
+      "data": {
+        "url": "data/site/annual.json"
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "color": "#287566",
+        "opacity": 0.72,
+        "stroke": "#fff",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "pm25",
+          "type": "quantitative",
+          "title": "PM2.5 (µg/m³)",
+          "scale": {
+            "domain": [
+              0,
+              42
+            ],
+            "range": [
+              0,
+              1400
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "city",
+            "type": "nominal",
+            "title": "Location"
+          },
+          {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "pm25",
+            "type": "quantitative",
+            "title": "PM2.5 (µg/m³)",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ]
+}

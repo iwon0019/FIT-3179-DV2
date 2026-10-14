@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "08 radial",
+  "width": "container",
+  "height": 320,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "data": {
+    "url": "data/site/monthly.json"
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    },
+    {
+      "name": "selectedCity",
+      "value": "L00"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year == selectedYear"
+    },
+    {
+      "filter": "datum.location_key == selectedCity"
+    },
+    {
+      "filter": "isValid(datum.rain)"
+    },
+    {
+      "calculate": "20 + datum.rain / 1200 * max(30, min(width, height) / 2 - 60)",
+      "as": "bar_radius"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 20,
+        "padAngle": 0.025,
+        "color": "#527da2"
+      },
+      "encoding": {
+        "theta": {
+          "field": "theta",
+          "type": "quantitative",
+          "scale": null
+        },
+        "theta2": {
+          "field": "theta_end"
+        },
+        "radius": {
+          "field": "bar_radius",
+          "type": "quantitative",
+          "scale": null
+        },
+        "tooltip": [
+          {
+            "field": "city",
+            "type": "nominal",
+            "title": "Location"
+          },
+          {
+            "field": "month",
+            "type": "temporal",
+            "title": "Month",
+            "format": "%b %Y"
+          },
+          {
+            "field": "rain",
+            "type": "quantitative",
+            "title": "Precipitation (mm)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "radius": {
+          "expr": "min(width, height) / 2 - 16"
+        },
+        "fontSize": 11,
+        "color": "#58675e"
+      },
+      "encoding": {
+        "theta": {
+          "field": "theta_mid",
+          "type": "quantitative",
+          "scale": null
+        },
+        "text": {
+          "field": "month_name"
+        }
+      }
+    }
+  ]
+}

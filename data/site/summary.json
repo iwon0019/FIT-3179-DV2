@@ -1,0 +1,137 @@
+{
+  "namedLocations": 8,
+  "weatherLocations": 7,
+  "dailyRecords": 5848,
+  "nationalPeak": {
+    "month": "September 2019",
+    "value": 52.86
+  },
+  "annual": [
+    {
+      "city": "Kuala Lumpur",
+      "year": 2024,
+      "pm25": 37.9407
+    },
+    {
+      "city": "Kuala Lumpur",
+      "year": 2025,
+      "pm25": 38.8523
+    },
+    {
+      "city": "George Town",
+      "year": 2024,
+      "pm25": 17.3199
+    },
+    {
+      "city": "George Town",
+      "year": 2025,
+      "pm25": 18.5698
+    },
+    {
+      "city": "Ipoh",
+      "year": 2024,
+      "pm25": 14.364
+    },
+    {
+      "city": "Ipoh",
+      "year": 2025,
+      "pm25": 16.2991
+    },
+    {
+      "city": "Johor Bahru",
+      "year": 2024,
+      "pm25": 18.6678
+    },
+    {
+      "city": "Johor Bahru",
+      "year": 2025,
+      "pm25": 19.1952
+    },
+    {
+      "city": "Kuantan",
+      "year": 2024,
+      "pm25": 11.4282
+    },
+    {
+      "city": "Kuantan",
+      "year": 2025,
+      "pm25": 10.8447
+    },
+    {
+      "city": "Kuching",
+      "year": 2024,
+      "pm25": 15.1943
+    },
+    {
+      "city": "Kuching",
+      "year": 2025,
+      "pm25": 13.9834
+    },
+    {
+      "city": "Miri",
+      "year": 2024,
+      "pm25": 15.5208
+    },
+    {
+      "city": "Miri",
+      "year": 2025,
+      "pm25": 9.4396
+    },
+    {
+      "city": "Kota Kinabalu",
+      "year": 2024,
+      "pm25": 10.6643
+    },
+    {
+      "city": "Kota Kinabalu",
+      "year": 2025,
+      "pm25": 10.5326
+    }
+  ],
+  "fireTotals": {
+    "2024": 8081,
+    "2025": 4867
+  },
+  "cities": [
+    {
+      "key": "L00",
+      "name": "Kuala Lumpur",
+      "weather": true
+    },
+    {
+      "key": "L01",
+      "name": "George Town",
+      "weather": false
+    },
+    {
+      "key": "L02",
+      "name": "Ipoh",
+      "weather": true
+    },
+    {
+      "key": "L03",
+      "name": "Johor Bahru",
+      "weather": true
+    },
+    {
+      "key": "L04",
+      "name": "Kuantan",
+      "weather": true
+    },
+    {
+      "key": "L06",
+      "name": "Kuching",
+      "weather": true
+    },
+    {
+      "key": "L07",
+      "name": "Miri",
+      "weather": true
+    },
+    {
+      "key": "L08",
+      "name": "Kota Kinabalu",
+      "weather": true
+    }
+  ]
+}

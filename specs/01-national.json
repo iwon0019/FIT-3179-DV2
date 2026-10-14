@@ -1,0 +1,150 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "01 national",
+  "width": "container",
+  "height": 300,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "data": {
+    "url": "data/site/national.json"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#287566",
+        "strokeWidth": 2.5,
+        "point": {
+          "size": 13
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%Y",
+            "tickCount": 7
+          }
+        },
+        "y": {
+          "field": "concentration",
+          "type": "quantitative",
+          "title": "PM2.5 (µg/m³)",
+          "scale": {
+            "zero": true
+          }
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "title": "Date",
+            "format": "%d %b %Y"
+          },
+          {
+            "field": "concentration",
+            "type": "quantitative",
+            "title": "Monthly PM2.5 (µg/m³)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "year(toDate(datum.date)) == 2019 && month(toDate(datum.date)) == 8"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#b86038",
+        "size": 80
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "concentration",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "year(toDate(datum.date)) == 2019 && month(toDate(datum.date)) == 8"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 9,
+        "dy": -10,
+        "color": "#b86038",
+        "fontSize": 11
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "concentration",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Sep 2019: 52.86"
+        }
+      }
+    }
+  ]
+}

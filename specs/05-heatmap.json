@@ -1,0 +1,145 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "05 heatmap",
+  "width": "container",
+  "height": 310,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "data": {
+    "url": "data/site/monthly.json"
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year == selectedYear"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "#fff",
+    "strokeWidth": 2,
+    "cornerRadius": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "month_name",
+      "type": "ordinal",
+      "sort": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "city",
+      "type": "nominal",
+      "sort": [
+        "Kuala Lumpur",
+        "George Town",
+        "Ipoh",
+        "Johor Bahru",
+        "Kuantan",
+        "Kuching",
+        "Miri",
+        "Kota Kinabalu"
+      ],
+      "title": null
+    },
+    "color": {
+      "field": "pm25",
+      "type": "quantitative",
+      "title": "PM2.5 (µg/m³)",
+      "scale": {
+        "domain": [
+          0,
+          65
+        ],
+        "range": [
+          "#edf1df",
+          "#89b291",
+          "#1a6355"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "city",
+        "type": "nominal",
+        "title": "Location"
+      },
+      {
+        "field": "month",
+        "type": "temporal",
+        "title": "Month",
+        "format": "%b %Y"
+      },
+      {
+        "field": "pm25",
+        "type": "quantitative",
+        "title": "PM2.5 (µg/m³)",
+        "format": ".1f"
+      }
+    ]
+  }
+}

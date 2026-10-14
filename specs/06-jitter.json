@@ -1,0 +1,144 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "06 jitter",
+  "width": "container",
+  "height": 350,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titlePadding": 12,
+      "domain": false,
+      "tickColor": "#e3e7e1",
+      "gridColor": "#e3e7e1",
+      "labelLimit": 130
+    },
+    "legend": {
+      "labelColor": "#58675e",
+      "titleColor": "#45564a",
+      "titleFontSize": 11,
+      "labelFontSize": 11,
+      "orient": "bottom",
+      "direction": "horizontal"
+    },
+    "range": {
+      "category": [
+        "#287566",
+        "#b86038",
+        "#527da2",
+        "#967544",
+        "#796899",
+        "#579189",
+        "#9e5572",
+        "#657940"
+      ]
+    },
+    "title": {
+      "color": "#203c30"
+    }
+  },
+  "data": {
+    "url": "data/site/daily.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "pm25": "number",
+        "rain": "number",
+        "temperature": "number",
+        "wind": "number",
+        "has_weather": "boolean",
+        "jitter": "number"
+      }
+    }
+  },
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2025
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year == selectedYear"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "size": 11,
+    "opacity": 0.3,
+    "color": "#287566"
+  },
+  "encoding": {
+    "x": {
+      "field": "city",
+      "type": "nominal",
+      "sort": [
+        "Kuala Lumpur",
+        "George Town",
+        "Ipoh",
+        "Johor Bahru",
+        "Kuantan",
+        "Kuching",
+        "Miri",
+        "Kota Kinabalu"
+      ],
+      "title": null,
+      "axis": {
+        "labelAngle": -32,
+        "labelLimit": 125
+      }
+    },
+    "xOffset": {
+      "field": "jitter",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          -0.5,
+          0.5
+        ]
+      }
+    },
+    "y": {
+      "field": "pm25",
+      "type": "quantitative",
+      "title": "Daily PM2.5 (µg/m³)",
+      "scale": {
+        "domain": [
+          0,
+          140
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "city",
+        "type": "nominal",
+        "title": "Location"
+      },
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date",
+        "format": "%d %b %Y"
+      },
+      {
+        "field": "pm25",
+        "type": "quantitative",
+        "title": "PM2.5 (µg/m³)",
+        "format": ".1f"
+      }
+    ]
+  }
+}
