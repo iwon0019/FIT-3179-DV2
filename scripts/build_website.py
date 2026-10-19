@@ -114,10 +114,8 @@ months['transform']=radial_transforms
 bars['mark'].update({'stroke':'#fffef9','strokeWidth':1})
 months['mark']['fontSize']=12
 rings={'data':{'values':[{'tick':v,'label':f'{v:,} mm'} for v in [0,400,800,1200]]},'transform':[{'calculate':'20 + datum.tick / 1200 * max(30, min(width, height) / 2 - 60)','as':'guide_radius'}],'mark':{'type':'arc','fill':None,'stroke':'#aab8b0','strokeWidth':1,'innerRadius':0},'encoding':{'theta':{'value':0},'theta2':{'value':2*math.pi},'radius':{'field':'guide_radius','type':'quantitative','scale':None,'stack':None}}}
-ring_labels=copy.deepcopy(rings)
-ring_labels['mark']={'type':'text','align':'left','dx':3,'dy':-5,'fontSize':10,'color':'#45564a'}
-ring_labels['encoding']={'theta':{'value':0},'radius':{'field':'guide_radius','type':'quantitative','scale':None,'stack':None},'text':{'field':'label'}}
-radial_spec['layer']=[rings,bars,months,ring_labels]
+# Ring values appear in the HTML key, outside the bars.
+radial_spec['layer']=[rings,bars,months]
 radial_path.write_text(json.dumps(radial_spec,ensure_ascii=False,indent=2),encoding='utf-8')
 
 stats={'namedLocations':len(loc),'weatherLocations':int(loc.weather_source_id.notna().sum()),'dailyRecords':len(day),'nationalPeak':{'month':'September 2019','value':52.86},'annual':annual[['city','year','pm25']].to_dict('records'),'fireTotals':{str(int(k)):int(v) for k,v in fs.groupby('year').detections.sum().items()},'cities':[{'key':r.location_key,'name':r.city,'weather':bool(pd.notna(r.weather_source_id))} for r in loc.itertuples()]}

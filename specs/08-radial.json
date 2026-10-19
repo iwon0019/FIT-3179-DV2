@@ -204,56 +204,6 @@
           "as": "bar_radius"
         }
       ]
-    },
-    {
-      "data": {
-        "values": [
-          {
-            "tick": 0,
-            "label": "0 mm"
-          },
-          {
-            "tick": 400,
-            "label": "400 mm"
-          },
-          {
-            "tick": 800,
-            "label": "800 mm"
-          },
-          {
-            "tick": 1200,
-            "label": "1,200 mm"
-          }
-        ]
-      },
-      "transform": [
-        {
-          "calculate": "20 + datum.tick / 1200 * max(30, min(width, height) / 2 - 60)",
-          "as": "guide_radius"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 3,
-        "dy": -5,
-        "fontSize": 10,
-        "color": "#45564a"
-      },
-      "encoding": {
-        "theta": {
-          "value": 0
-        },
-        "radius": {
-          "field": "guide_radius",
-          "type": "quantitative",
-          "scale": null,
-          "stack": null
-        },
-        "text": {
-          "field": "label"
-        }
-      }
     }
   ]
 }
