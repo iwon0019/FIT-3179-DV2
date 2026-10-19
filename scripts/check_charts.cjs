@@ -31,7 +31,7 @@ function marks(view){
       const filtered=marks(view).filter(m=>m.mark.marktype==='symbol').length;assert(filtered>0&&filtered<count,'Episode filter must narrow points');
     }
     if(name.startsWith('07')){assert.equal(initial.length,365);await view.signal('selectedCity','L07').runAsync();assert.equal(marks(view).length,365);}
-    if(name.startsWith('08'))assert.equal(initial.filter(m=>m.mark.marktype==='arc').length,12);
+    if(name.startsWith('08'))assert.equal(initial.filter(m=>m.mark.marktype==='arc' && m.datum.rain !== undefined).length,12);
     if(name.startsWith('04'))assert.equal(initial.filter(m=>m.mark.marktype==='symbol').length,8);
     if(name.startsWith('05'))assert.equal(initial.length,96);
     if(name.startsWith('06'))assert.equal(initial.length,8*365);

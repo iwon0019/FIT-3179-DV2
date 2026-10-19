@@ -99,7 +99,26 @@ slope_spec=json.loads(slope_path.read_text(encoding='utf-8'))
 slope_marks={'mark':slope_spec.pop('mark'),'encoding':slope_spec.pop('encoding')}
 slope_labels={'transform':[cityfilter], 'mark':{'type':'text','dy':-14,'fontSize':12,'fontWeight':'bold','color':GREEN},'encoding':{'x':{'field':'year','type':'ordinal'},'y':{'field':'pm25','type':'quantitative'},'text':{'field':'pm25','type':'quantitative','format':'.2f'}}}
 slope_spec['layer']=[slope_marks,slope_labels]
+slope_spec['height']=390
+slope_marks['encoding']['color']['legend']={'title':'Location','orient':'bottom','columns':2,'labelFontSize':12,'labelLimit':150,'symbolOpacity':1,'rowPadding':7}
+slope_labels['mark'].pop('color')
+slope_labels['encoding']['color']=copy.deepcopy(slope_marks['encoding']['color'])
 slope_path.write_text(json.dumps(slope_spec,ensure_ascii=False,indent=2),encoding='utf-8')
+
+radial_path=S/'08-radial.json'
+radial_spec=json.loads(radial_path.read_text(encoding='utf-8'))
+radial_transforms=radial_spec.pop('transform')
+bars,months=radial_spec['layer']
+bars['transform']=radial_transforms
+months['transform']=radial_transforms
+bars['mark'].update({'stroke':'#fffef9','strokeWidth':1})
+months['mark']['fontSize']=12
+rings={'data':{'values':[{'tick':v,'label':f'{v:,} mm'} for v in [0,400,800,1200]]},'transform':[{'calculate':'20 + datum.tick / 1200 * max(30, min(width, height) / 2 - 60)','as':'guide_radius'}],'mark':{'type':'arc','fill':None,'stroke':'#aab8b0','strokeWidth':1,'innerRadius':0},'encoding':{'theta':{'value':0},'theta2':{'value':2*math.pi},'radius':{'field':'guide_radius','type':'quantitative','scale':None,'stack':None}}}
+ring_labels=copy.deepcopy(rings)
+ring_labels['mark']={'type':'text','align':'left','dx':3,'dy':-5,'fontSize':10,'color':'#45564a'}
+ring_labels['encoding']={'theta':{'value':0},'radius':{'field':'guide_radius','type':'quantitative','scale':None,'stack':None},'text':{'field':'label'}}
+radial_spec['layer']=[rings,bars,months,ring_labels]
+radial_path.write_text(json.dumps(radial_spec,ensure_ascii=False,indent=2),encoding='utf-8')
 
 stats={'namedLocations':len(loc),'weatherLocations':int(loc.weather_source_id.notna().sum()),'dailyRecords':len(day),'nationalPeak':{'month':'September 2019','value':52.86},'annual':annual[['city','year','pm25']].to_dict('records'),'fireTotals':{str(int(k)):int(v) for k,v in fs.groupby('year').detections.sum().items()},'cities':[{'key':r.location_key,'name':r.city,'weather':bool(pd.notna(r.weather_source_id))} for r in loc.itertuples()]}
 (D/'summary.json').write_text(json.dumps(stats,indent=2))

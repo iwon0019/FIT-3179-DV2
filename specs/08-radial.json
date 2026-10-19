@@ -61,28 +61,64 @@
       "value": "L00"
     }
   ],
-  "transform": [
-    {
-      "filter": "datum.year == selectedYear"
-    },
-    {
-      "filter": "datum.location_key == selectedCity"
-    },
-    {
-      "filter": "isValid(datum.rain)"
-    },
-    {
-      "calculate": "20 + datum.rain / 1200 * max(30, min(width, height) / 2 - 60)",
-      "as": "bar_radius"
-    }
-  ],
   "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "tick": 0,
+            "label": "0 mm"
+          },
+          {
+            "tick": 400,
+            "label": "400 mm"
+          },
+          {
+            "tick": 800,
+            "label": "800 mm"
+          },
+          {
+            "tick": 1200,
+            "label": "1,200 mm"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "20 + datum.tick / 1200 * max(30, min(width, height) / 2 - 60)",
+          "as": "guide_radius"
+        }
+      ],
+      "mark": {
+        "type": "arc",
+        "fill": null,
+        "stroke": "#aab8b0",
+        "strokeWidth": 1,
+        "innerRadius": 0
+      },
+      "encoding": {
+        "theta": {
+          "value": 0
+        },
+        "theta2": {
+          "value": 6.283185307179586
+        },
+        "radius": {
+          "field": "guide_radius",
+          "type": "quantitative",
+          "scale": null,
+          "stack": null
+        }
+      }
+    },
     {
       "mark": {
         "type": "arc",
         "innerRadius": 20,
         "padAngle": 0.025,
-        "color": "#527da2"
+        "color": "#527da2",
+        "stroke": "#fffef9",
+        "strokeWidth": 1
       },
       "encoding": {
         "theta": {
@@ -117,7 +153,22 @@
             "format": ".1f"
           }
         ]
-      }
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        },
+        {
+          "filter": "datum.location_key == selectedCity"
+        },
+        {
+          "filter": "isValid(datum.rain)"
+        },
+        {
+          "calculate": "20 + datum.rain / 1200 * max(30, min(width, height) / 2 - 60)",
+          "as": "bar_radius"
+        }
+      ]
     },
     {
       "mark": {
@@ -125,7 +176,7 @@
         "radius": {
           "expr": "min(width, height) / 2 - 16"
         },
-        "fontSize": 11,
+        "fontSize": 12,
         "color": "#58675e"
       },
       "encoding": {
@@ -136,6 +187,71 @@
         },
         "text": {
           "field": "month_name"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        },
+        {
+          "filter": "datum.location_key == selectedCity"
+        },
+        {
+          "filter": "isValid(datum.rain)"
+        },
+        {
+          "calculate": "20 + datum.rain / 1200 * max(30, min(width, height) / 2 - 60)",
+          "as": "bar_radius"
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "tick": 0,
+            "label": "0 mm"
+          },
+          {
+            "tick": 400,
+            "label": "400 mm"
+          },
+          {
+            "tick": 800,
+            "label": "800 mm"
+          },
+          {
+            "tick": 1200,
+            "label": "1,200 mm"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "20 + datum.tick / 1200 * max(30, min(width, height) / 2 - 60)",
+          "as": "guide_radius"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 3,
+        "dy": -5,
+        "fontSize": 10,
+        "color": "#45564a"
+      },
+      "encoding": {
+        "theta": {
+          "value": 0
+        },
+        "radius": {
+          "field": "guide_radius",
+          "type": "quantitative",
+          "scale": null,
+          "stack": null
+        },
+        "text": {
+          "field": "label"
         }
       }
     }

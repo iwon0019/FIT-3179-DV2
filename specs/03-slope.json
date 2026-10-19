@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "03 slope",
   "width": "container",
-  "height": 300,
+  "height": 390,
   "autosize": {
     "type": "fit",
     "contains": "padding"
@@ -116,7 +116,15 @@
               "#657940"
             ]
           },
-          "legend": null
+          "legend": {
+            "title": "Location",
+            "orient": "bottom",
+            "columns": 2,
+            "labelFontSize": 12,
+            "labelLimit": 150,
+            "symbolOpacity": 1,
+            "rowPadding": 7
+          }
         },
         "opacity": {
           "condition": {
@@ -155,8 +163,7 @@
         "type": "text",
         "dy": -14,
         "fontSize": 12,
-        "fontWeight": "bold",
-        "color": "#287566"
+        "fontWeight": "bold"
       },
       "encoding": {
         "x": {
@@ -171,6 +178,42 @@
           "field": "pm25",
           "type": "quantitative",
           "format": ".2f"
+        },
+        "color": {
+          "field": "city",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Kuala Lumpur",
+              "George Town",
+              "Ipoh",
+              "Johor Bahru",
+              "Kuantan",
+              "Kuching",
+              "Miri",
+              "Kota Kinabalu"
+            ],
+            "range": [
+              "#287566",
+              "#b86038",
+              "#527da2",
+              "#967544",
+              "#796899",
+              "#579189",
+              "#9e5572",
+              "#657940"
+            ]
+          },
+          "legend": {
+            "title": "Location",
+            "orient": "bottom",
+            "columns": 2,
+            "labelFontSize": 12,
+            "labelLimit": 150,
+            "symbolOpacity": 1,
+            "rowPadding": 7
+          }
         }
       }
     }
