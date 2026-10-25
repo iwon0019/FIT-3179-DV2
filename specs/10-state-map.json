@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "10 state map",
   "width": "container",
-  "height": 320,
+  "height": 410,
   "autosize": {
     "type": "fit",
     "contains": "padding"

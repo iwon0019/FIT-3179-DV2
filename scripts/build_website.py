@@ -90,8 +90,9 @@ save('12-bin-map',{'params':[Y],'projection':projection,'layer':[basemap,{'data'
 national_path=S/'01-national.json'
 national_spec=json.loads(national_path.read_text(encoding='utf-8'))
 peak_label=copy.deepcopy(national_spec['layer'][1])
-peak_label['mark']={'type':'text','align':'left','dx':9,'dy':-10,'color':ORANGE,'fontSize':11}
-peak_label['encoding']['text']={'value':'Sep 2019: 52.86'}
+peak_label['mark']={'type':'text','align':'left','dx':9,'dy':-39,'color':ORANGE,'fontSize':11,'lineHeight':13}
+peak_label['encoding']['text']={'value':['Sep 2019: 52.86','Transboundary fire smoke','affected Malaysia.']}
+national_spec['layer'][0]['encoding']['y']['scale']['domain']=[0,65]
 national_spec['layer'].append(peak_label)
 national_path.write_text(json.dumps(national_spec,ensure_ascii=False,indent=2),encoding='utf-8')
 slope_path=S/'03-slope.json'
@@ -117,6 +118,30 @@ rings={'data':{'values':[{'tick':v,'label':f'{v:,} mm'} for v in [0,400,800,1200
 # Ring values appear in the HTML key, outside the bars.
 radial_spec['layer']=[rings,bars,months]
 radial_path.write_text(json.dumps(radial_spec,ensure_ascii=False,indent=2),encoding='utf-8')
+
+# Peak labels give monthly regional context, not event attribution.
+timeline_path=S/'09-fire-timeline.json'
+timeline=json.loads(timeline_path.read_text(encoding='utf-8'))
+timeline['height']=280
+bars={'name':'hotspot_bars','mark':timeline.pop('mark'),'encoding':timeline.pop('encoding'),'params':[timeline['params'][1]]}
+timeline['params']=[Y]
+bars['encoding']['y']['scale']={'domain':[0,240]}
+peak_rows=[]
+for yr in [2024,2025]:
+    peak=fd[fd.year==yr].sort_values(['detections','date'],ascending=[False,True]).iloc[0]
+    date_label=pd.Timestamp(peak.date).strftime('%d %b')
+    context=['April: local smoke reported.'] if yr==2024 else ['July: dry weather favoured','regional fire activity.']
+    peak_rows.append({'year':yr,'date':peak.date,'detections':int(peak.detections),'label':[f'{date_label}: {int(peak.detections)} detections',*context]})
+peak_encoding={'x':{'field':'date','type':'temporal'},'y':{'field':'detections','type':'quantitative'}}
+peak_points={'data':{'values':peak_rows},'transform':[yearfilter],'mark':{'type':'point','filled':True,'color':ORANGE,'size':50},'encoding':copy.deepcopy(peak_encoding)}
+peak_text={'data':{'values':peak_rows},'transform':[yearfilter],'mark':{'type':'text','align':{'expr':"selectedYear == 2025 ? 'right' : 'left'"},'dx':{'expr':'selectedYear == 2025 ? -9 : 9'},'dy':-40,'fontSize':11,'lineHeight':13,'color':ORANGE},'encoding':{**copy.deepcopy(peak_encoding),'text':{'field':'label'}}}
+timeline['layer']=[bars,peak_points,peak_text]
+timeline_path.write_text(json.dumps(timeline,ensure_ascii=False,indent=2),encoding='utf-8')
+for name in ['10-state-map','12-bin-map']:
+    path=S/(name+'.json')
+    spec=json.loads(path.read_text(encoding='utf-8'))
+    spec['height']=410
+    path.write_text(json.dumps(spec,ensure_ascii=False,indent=2),encoding='utf-8')
 
 stats={'namedLocations':len(loc),'weatherLocations':int(loc.weather_source_id.notna().sum()),'dailyRecords':len(day),'nationalPeak':{'month':'September 2019','value':52.86},'annual':annual[['city','year','pm25']].to_dict('records'),'fireTotals':{str(int(k)):int(v) for k,v in fs.groupby('year').detections.sum().items()},'cities':[{'key':r.location_key,'name':r.city,'weather':bool(pd.notna(r.weather_source_id))} for r in loc.itertuples()]}
 (D/'summary.json').write_text(json.dumps(stats,indent=2))

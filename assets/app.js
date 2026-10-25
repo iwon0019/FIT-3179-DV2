@@ -38,6 +38,7 @@
     try {
       const spec = await load(`specs/${name}.json`);
       spec.width = Math.max(180, Math.floor(container.clientWidth));
+      if (id === '10' || id === '12') spec.height = Math.max(180, Math.min(440, Math.round(spec.width * 0.34 + 55)));
       if (window.innerWidth < 500 && id === '06') spec.encoding.x.axis.labelAngle = -50;
       const result = await vegaEmbed(container, spec, {actions:false, renderer:'canvas', tooltip:{theme:'light'}, defaultStyle:false});
       views.set(id, result.view);
@@ -50,7 +51,11 @@
       });
       const resize = new ResizeObserver(entries => {
         const width = Math.floor(entries[0].contentRect.width);
-        if (width > 0 && Math.abs(width - result.view.width()) > 2) result.view.width(width).resize().runAsync().catch(console.error);
+        if (width > 0 && Math.abs(width - result.view.width()) > 2) {
+          result.view.width(width);
+          if (id === '10' || id === '12') result.view.height(Math.max(180, Math.min(440, Math.round(width * 0.34 + 55))));
+          result.view.resize().runAsync().catch(console.error);
+        }
       });
       resize.observe(container);
     } catch (error) {

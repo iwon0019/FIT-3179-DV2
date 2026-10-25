@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "09 fire timeline",
   "width": "container",
-  "height": 220,
+  "height": 280,
   "autosize": {
     "type": "fit",
     "contains": "padding"
@@ -55,15 +55,6 @@
     {
       "name": "selectedYear",
       "value": 2025
-    },
-    {
-      "name": "episode",
-      "select": {
-        "type": "interval",
-        "encodings": [
-          "x"
-        ]
-      }
     }
   ],
   "transform": [
@@ -71,38 +62,162 @@
       "filter": "datum.year == selectedYear"
     }
   ],
-  "mark": {
-    "type": "bar",
-    "color": "#b86038"
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": null,
-      "axis": {
-        "format": "%b",
-        "tickCount": 12
-      }
-    },
-    "y": {
-      "field": "detections",
-      "type": "quantitative",
-      "title": "Detections / day"
-    },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date",
-        "format": "%d %b %Y"
+  "layer": [
+    {
+      "name": "hotspot_bars",
+      "mark": {
+        "type": "bar",
+        "color": "#b86038"
       },
-      {
-        "field": "detections",
-        "type": "quantitative",
-        "title": "Hotspot detections",
-        "format": ",d"
-      }
-    ]
-  }
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%b",
+            "tickCount": 12
+          }
+        },
+        "y": {
+          "field": "detections",
+          "type": "quantitative",
+          "title": "Detections / day",
+          "scale": {
+            "domain": [
+              0,
+              240
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "title": "Date",
+            "format": "%d %b %Y"
+          },
+          {
+            "field": "detections",
+            "type": "quantitative",
+            "title": "Hotspot detections",
+            "format": ",d"
+          }
+        ]
+      },
+      "params": [
+        {
+          "name": "episode",
+          "select": {
+            "type": "interval",
+            "encodings": [
+              "x"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "date": "2024-04-07",
+            "year": 2024,
+            "detections": 178,
+            "label": [
+              "07 Apr: 178 detections",
+              "April: local smoke reported."
+            ]
+          },
+          {
+            "date": "2025-07-28",
+            "year": 2025,
+            "detections": 182,
+            "label": [
+              "28 Jul: 182 detections",
+              "July: dry weather favoured",
+              "regional fire activity."
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#b86038",
+        "size": 50
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "detections",
+          "type": "quantitative"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "date": "2024-04-07",
+            "year": 2024,
+            "detections": 178,
+            "label": [
+              "07 Apr: 178 detections",
+              "April: local smoke reported."
+            ]
+          },
+          {
+            "date": "2025-07-28",
+            "year": 2025,
+            "detections": 182,
+            "label": [
+              "28 Jul: 182 detections",
+              "July: dry weather favoured",
+              "regional fire activity."
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": {
+          "expr": "selectedYear == 2025 ? 'right' : 'left'"
+        },
+        "dx": {
+          "expr": "selectedYear == 2025 ? -9 : 9"
+        },
+        "dy": -40,
+        "fontSize": 11,
+        "lineHeight": 13,
+        "color": "#b86038"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "detections",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year == selectedYear"
+        }
+      ]
+    }
+  ]
 }
